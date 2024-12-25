@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: demo
+  cassandra:
+    contact-points: localhost
+    keyspace-name: keyspace_messages
+    username: cassandra
+    password: cassandra
+    local-datacenter: datacenter1
+    schema-action: create_if_not_exists
+    port: 9042
+    request:
+      consistency: quorum
+      timeout: 60s
+
+logging:
+  level:
+    reactor: ERROR                              # Logs all Reactor actions, such as signals/events
+    reactor.util.Loggers: ERROR                 # Detailed logging for Flux/Mono
+    com.datastax.oss.driver: ERROR              # Logs Cassandra Java Driver actions
+    org.springframework.data.cassandra: TRACE  # Logs Spring Data Cassandra specific events
