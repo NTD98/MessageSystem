@@ -14,7 +14,7 @@ public class MessageController {
     private MessageService messageService;
 
     @PostMapping
-    public Mono<String> postMessage(@RequestBody String message) {
+    public Mono<String> postMessage(@RequestBody Message message) {
         // Logic to handle the message
         return Mono.just("Received message: " + message);
     }

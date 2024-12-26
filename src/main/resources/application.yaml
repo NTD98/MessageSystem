@@ -1,16 +1,24 @@
 spring:
   application:
     name: demo
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092,localhost:9094,localhost:9093  # Kafka brokers
+      group-id: my-consumer-group
+      enable-auto-commit: true
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   cassandra:
     contact-points: localhost
-    keyspace-name: keyspace_messages
+    keyspace-name: keyspace_message
     username: cassandra
     password: cassandra
     local-datacenter: datacenter1
     schema-action: create_if_not_exists
     port: 9042
     request:
-      consistency: quorum
+      consistency: any
       timeout: 60s
 
 logging:

@@ -14,18 +14,16 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-@Table(value = "user",keyspace = "keyspace_users")
+@Table(value = "user",keyspace = "keyspace_user")
 public class UserEntity {
     @PrimaryKey
     @Id
     @Builder.Default
     private UUID userid = UUID.randomUUID();
     @Column("create_time")
-    @Builder.Default
-    private Instant createTime = Instant.now();
+    private Instant createTime;
     @Column("last_login_time")
-    @Builder.Default
-    private Instant lastLoginTime = Instant.now();
+    private Instant lastLoginTime;
     private String email;
     @Column("display_name")
     private String displayName;

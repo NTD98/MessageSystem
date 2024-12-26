@@ -8,8 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.stream.IntStream;
+import java.time.Instant;
 
 @AllArgsConstructor
 @Service
@@ -18,20 +17,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<String> createUser(User user) {
-        var list = new ArrayList<UserEntity>();
-        IntStream.range(2, 1000).forEach(i -> {
-            list.add(UserEntity.builder()
-                    .displayName("User "+i)
-                    .status("active")
-                    .phone(user.getPhone())
-                    .email("User "+i+"@gmail.com")
-                    .username("User "+i)
-                    .build());
-        });
-        userRepository.saveAll(list)
-                .doOnComplete(() -> System.out.println("All users saved to the database."))
-                .doOnError(error -> System.err.println("Error occurred: " + error.getMessage()))
-                .subscribe(); // Triggers the save operation;
-        return Mono.just("User created successfully");
+        var now = Instant.now();
+        return userRepository.save(UserEntity.builder()
+                        .username(user.getUsername())
+                        .email(user.getEmail())
+                        .phone(user.getPhone())
+                        .status("ACTIVE")
+                        .displayName(user.getDisplayName())
+                        .createTime(now)
+                        .lastLoginTime(now)
+                        .build()).map(UserEntity::toString);
     }
 }
