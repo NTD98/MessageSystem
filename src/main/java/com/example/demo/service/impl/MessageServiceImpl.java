@@ -6,15 +6,27 @@ import com.example.demo.entity.MessageEntity;
 import com.example.demo.repository.MessageRepository;
 import com.example.demo.service.MessageService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+
 @Service
-@AllArgsConstructor
+@Log4j2
 public class MessageServiceImpl implements MessageService {
 
-    private MessageRepository messageRepository;
+    private final MessageRepository messageRepository;
+    private final ExecutorService executorService;
+
+    public MessageServiceImpl(MessageRepository messageRepository, @Qualifier("threadPoolExecutor") ExecutorService executorService) {
+        this.messageRepository = messageRepository;
+        this.executorService = executorService;
+    }
 
     @Override
     public Flux<Message> getMessages(String senderId) {
@@ -36,5 +48,22 @@ public class MessageServiceImpl implements MessageService {
                         .sent_at(message.getSent_at())
                         .build())
                 .map(messageEntity -> messageEntity.getMessageId().toString());
+    }
+
+    @Override
+    @Async("threadPoolExecutor")
+    public void sendBatchMessage(List<Message> message) {
+        messageRepository.saveAll(message.parallelStream().map(item->MessageEntity.builder()
+                        .content(item.getContent())
+                        .sender(item.getSender())
+                        .receiver(item.getReceiver())
+                        .sent_at(item.getSent_at())
+                        .build()).toList())
+                .doOnComplete(()->
+                        log.info("Batch send finished"))
+                .doOnComplete(()->
+                        log.info("Successfully sent batch message"))
+                .doOnError(throwable ->
+                        log.error(throwable.getMessage())).subscribe();
     }
 }

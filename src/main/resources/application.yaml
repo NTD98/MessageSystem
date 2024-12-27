@@ -18,7 +18,7 @@ spring:
     schema-action: create_if_not_exists
     port: 9042
     request:
-      consistency: any
+      consistency: quorum
       timeout: 60s
 
 logging:
@@ -27,3 +27,4 @@ logging:
     reactor.util.Loggers: ERROR                 # Detailed logging for Flux/Mono
     com.datastax.oss.driver: ERROR              # Logs Cassandra Java Driver actions
     org.springframework.data.cassandra: TRACE  # Logs Spring Data Cassandra specific events
+    com.example.demo: TRACE
