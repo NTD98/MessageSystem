@@ -13,7 +13,7 @@ import java.util.concurrent.*;
 @EnableAsync
 public class AppConfig {
     @Value("${app.snowflake.worker-id}")
-    private long workerId;
+    private int workerId;
     @Value("${app.snowflake.datacenter}")
     private int dataCenterId;
     // Create the VirtualThreadExecutor bean

@@ -7,5 +7,5 @@ import reactor.core.publisher.Flux;
 
 public interface MessageRepository extends ReactiveCassandraRepository<MessageEntity, Long> {
     @AllowFiltering
-    Flux<MessageEntity> findAllByAuthorName(String senderId);
+    Flux<MessageEntity> findAllByAuthorId(String senderId);
 }

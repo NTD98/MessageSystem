@@ -27,12 +27,11 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Flux<Message> getMessages(String senderId) {
-        return messageRepository.findAllByAuthorName(senderId)
+        return messageRepository.findAllByAuthorId(senderId)
                 .map(messageEntity -> Message.builder()
                         .ChannelId(messageEntity.getChannelId())
-                        .sender(messageEntity.getAuthorName())
+                        .sender(messageEntity.getAuthorId())
                         .content(messageEntity.getContent())
-                        .sentAt(messageEntity.getSent_at())
                         .build());
     }
 
@@ -40,22 +39,20 @@ public class MessageServiceImpl implements MessageService {
     public Mono<String> sendMessage(Message message) {
         return messageRepository.save(MessageEntity.builder()
                         .content(message.getContent())
-                        .authorName(message.getSender())
-                        .sent_at(message.getSentAt())
+                        .authorId(message.getSender())
                         .build())
-                .map(messageEntity -> messageEntity.getMessageId().toString());
+                .map(MessageEntity::getAuthorId);
     }
 
     @Override
     @Async("virtualThreadPoolExecutor")
     public void sendBatchMessage(List<Message> message) {
         messageRepository.saveAll(message.parallelStream().map(item->MessageEntity.builder()
-                        .bucket(appConfig.snowflake().getWorkerId())
+                        .bucket((int) appConfig.snowflake().getWorkerId())
                         .channelId(item.getChannelId())
                         .messageId(snowflake.nextId())
                         .content(item.getContent())
-                        .authorName(item.getSender())
-                        .sent_at(item.getSentAt())
+                        .authorId(item.getSender())
                         .build()).toList())
                 .doOnComplete(()->
                         log.info("Batch send finished"))

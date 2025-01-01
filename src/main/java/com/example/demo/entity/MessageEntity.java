@@ -18,19 +18,18 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Table(value = "message",keyspace = "keyspace_message")
+@Table(value = "messages",keyspace = "keyspace_message")
 @Builder
 public class MessageEntity {
     @PrimaryKeyColumn(name = "channel_id", type = PrimaryKeyType.PARTITIONED)
-    private Long channelId;
+    private long channelId;
 
     @PrimaryKeyColumn(name = "bucket", type = PrimaryKeyType.PARTITIONED)
-    private Long bucket;
+    private int bucket;
 
     @PrimaryKeyColumn(name = "message_id", type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
-    private Long messageId;
+    private long messageId;
     private String content;
-    private String authorName;
-
-    private Timestamp sent_at;
+    @Column(value = "author_id")
+    private String authorId;
 }
