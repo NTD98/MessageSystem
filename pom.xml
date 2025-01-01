@@ -64,6 +64,11 @@
             <artifactId>spring-kafka</artifactId>
             <version>3.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>wiki.xsx</groupId>
+            <artifactId>snowflake-spring-boot-starter</artifactId>
+            <version>1.2.3</version>
+        </dependency>
     </dependencies>
 
     <build>

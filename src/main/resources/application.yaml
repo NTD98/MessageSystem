@@ -21,6 +21,11 @@ spring:
       consistency: quorum
       timeout: 60s
 
+app:
+  snowflake:
+    worker-id: 1
+    datacenter: 1
+
 logging:
   level:
     reactor: ERROR                              # Logs all Reactor actions, such as signals/events

@@ -21,7 +21,7 @@ public class KafkaConsumer {
             containerFactory = "kafkaListenerContainerFactory"
     )
     public void listen(List<Message> message) {
-        System.out.println("Received message: " + message.getFirst().getMessage_id());
+        System.out.println("Received message: " + message.getFirst().getChannelId());
         messageService.sendBatchMessage(message);
     }
 }

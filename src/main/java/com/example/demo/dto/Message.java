@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Message {
 
-    private String message_id;
+    private Long ChannelId;
 
     private String content;
 
@@ -21,5 +21,5 @@ public class Message {
 
     private String sender;
 
-    private Timestamp sent_at;
+    private Timestamp sentAt;
 }
