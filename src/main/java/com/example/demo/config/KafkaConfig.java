@@ -4,7 +4,6 @@ import com.example.demo.dto.Message;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import lombok.AllArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +36,7 @@ public class KafkaConfig {
         // JsonDeserializer configurations
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "com.example.demo"); // Adjust for security
         props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, Message.class.getName());
+        props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, 5000);
         return props;
     }
 
@@ -50,7 +50,7 @@ public class KafkaConfig {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setBatchListener(true); // Enable batch processing
-        factory.setConcurrency(10);
+        factory.setConcurrency(3);
         return factory;
     }
 }

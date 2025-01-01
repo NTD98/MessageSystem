@@ -21,11 +21,9 @@ import java.util.concurrent.ExecutorService;
 public class MessageServiceImpl implements MessageService {
 
     private final MessageRepository messageRepository;
-    private final ExecutorService executorService;
 
-    public MessageServiceImpl(MessageRepository messageRepository, @Qualifier("threadPoolExecutor") ExecutorService executorService) {
+    public MessageServiceImpl(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
-        this.executorService = executorService;
     }
 
     @Override
@@ -51,7 +49,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Async("threadPoolExecutor")
+    @Async("virtualThreadPoolExecutor")
     public void sendBatchMessage(List<Message> message) {
         messageRepository.saveAll(message.parallelStream().map(item->MessageEntity.builder()
                         .content(item.getContent())

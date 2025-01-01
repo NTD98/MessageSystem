@@ -3,7 +3,7 @@ spring:
     name: demo
   kafka:
     consumer:
-      bootstrap-servers: localhost:9092,localhost:9094,localhost:9093  # Kafka brokers
+      bootstrap-servers: localhost:9092
       group-id: my-consumer-group
       enable-auto-commit: true
       auto-offset-reset: earliest
