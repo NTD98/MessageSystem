@@ -2,12 +2,16 @@ package com.example.demo.listener;
 
 import com.example.demo.dto.Message;
 import com.example.demo.service.MessageService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import javax.lang.model.type.ReferenceType;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 @AllArgsConstructor
@@ -20,8 +24,16 @@ public class KafkaConsumer {
             groupId = "my-consumer-group",
             containerFactory = "kafkaListenerContainerFactory"
     )
-    public void listen(List<Message> message) {
-        System.out.println("Received message: " + message.getFirst().getChannelId());
-        messageService.sendBatchMessage(message);
+    public void listen(List<String> message) {
+        message.parallelStream().forEach(msg ->{
+            try {
+                List<Message> messageList = objectMapper.readValue(msg, new TypeReference<>() {
+                });
+                System.out.println("Received message: " + messageList.getFirst().getChannelId());
+                messageService.sendBatchMessage(messageList);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

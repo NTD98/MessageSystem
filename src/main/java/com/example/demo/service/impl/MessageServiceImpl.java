@@ -14,6 +14,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import wiki.xsx.core.snowflake.config.Snowflake;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -48,7 +49,7 @@ public class MessageServiceImpl implements MessageService {
     @Async("virtualThreadPoolExecutor")
     public void sendBatchMessage(List<Message> message) {
         messageRepository.saveAll(message.parallelStream().map(item->MessageEntity.builder()
-                        .bucket((int) appConfig.snowflake().getWorkerId())
+                        .bucket(LocalDate.now())
                         .channelId(item.getChannelId())
                         .messageId(snowflake.nextId())
                         .content(item.getContent())

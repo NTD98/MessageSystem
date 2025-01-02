@@ -14,6 +14,8 @@ import lombok.Setter;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -25,7 +27,7 @@ public class MessageEntity {
     private long channelId;
 
     @PrimaryKeyColumn(name = "bucket", type = PrimaryKeyType.PARTITIONED)
-    private int bucket;
+    private LocalDate bucket;
 
     @PrimaryKeyColumn(name = "message_id", type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private long messageId;

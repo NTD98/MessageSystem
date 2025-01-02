@@ -28,14 +28,11 @@ public class KafkaConfig {
 
         // Value deserializer
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class.getName());
-        props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName());
+        props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, StringDeserializer.class.getName());
 
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false); // optional
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 10); // Number of records in a batch
 
-        // JsonDeserializer configurations
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "com.example.demo"); // Adjust for security
-        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, Message.class.getName());
         props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, 5000);
         return props;
     }
