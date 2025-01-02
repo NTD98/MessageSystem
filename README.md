@@ -153,6 +153,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 For questions or suggestions, please reach out to the project maintainer:
 
-- **Name**: Nguyen Thanh Dat
+- **Name**: Nguyen Tien Dat
 - **GitHub**: [NTD98](https://github.com/NTD98)
-- **Email**: [your-email@example.com]
+- **Email**: [16520199@gm.uit.edu.vn]
