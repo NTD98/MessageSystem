@@ -30,7 +30,7 @@ public class KafkaConfig {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class.getName());
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, StringDeserializer.class.getName());
 
-        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false); // optional
+        //props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false); // optional
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 10); // Number of records in a batch
 
         props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, 5000);

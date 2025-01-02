@@ -8,10 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-
-import javax.lang.model.type.ReferenceType;
 import java.util.List;
-import java.util.stream.IntStream;
+
 
 @Service
 @AllArgsConstructor
