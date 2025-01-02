@@ -2,7 +2,7 @@
 # MessageSystem
 
 A lightweight, scalable messaging system built with Spring Boot and Apache Cassandra. This project demonstrates an efficient way to manage and store messages between users using a distributed database.
-
+Architecture overview: https://lucid.app/lucidchart/6b9bfc46-b9d0-40a9-96ed-ec952060d645/edit?viewport_loc=936%2C-33%2C3920%2C1923%2C0_0&invitationId=inv_108ef4d0-3927-4ea6-ae47-000c0eecb0d2
 ## Features
 
 - **Messaging**: Allows users to send, receive, and manage messages.
