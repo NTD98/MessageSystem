@@ -5,7 +5,6 @@ A lightweight, scalable messaging system built with Spring Boot and Apache Cassa
 Architecture overview: https://lucid.app/lucidchart/6b9bfc46-b9d0-40a9-96ed-ec952060d645/edit?viewport_loc=936%2C-33%2C3920%2C1923%2C0_0&invitationId=inv_108ef4d0-3927-4ea6-ae47-000c0eecb0d2
 ## Features
 
-- **Messaging**: Allows users to send, receive, and manage messages.
 - **Cassandra Integration**: Leverages Cassandra's distributed and fault-tolerant design for data persistence.
 - **Spring Boot**: Provides a robust backend framework for RESTful APIs and modular development.
 - **Data Model**: Efficiently designed schema optimized for performance in a distributed environment.
@@ -13,7 +12,9 @@ Architecture overview: https://lucid.app/lucidchart/6b9bfc46-b9d0-40a9-96ed-ec95
 
 - **Data Sharding**: divine data through shards with (channel,bucket) indexing, enhance query performance.
 - **Time sensitive query**: Generate UUID with snowflake generator, so that we can quickly query ordered data.
-
+- **CQRS**: the **Message API write** processes writes, validates data, and publishes events, while the **Message API Read** handles optimized reads from cassandra quorum.
+- **Message Api Read**: Use blocking concurrent request has the same data rows, so that service only execute query only one then caching this data in **Redis**. This reduces performance pitfall when executing too many query at the same time.
+- **Message Api write**: Leverages reactive programming principles to handle high-throughput, non-blocking operations efficiently. It processes write requests asynchronously, ensuring scalability and responsiveness, even under heavy loads. By utilizing reactive streams, it manages backpressure, enabling controlled data flow. This approach ensures low-latency writes and enhances system resilience.
 ---
 
 ## Getting Started
@@ -75,9 +76,7 @@ To run this project, ensure you have the following installed:
 
 | Method | Endpoint                  | Description                       |
 |--------|---------------------------|-----------------------------------|
-| GET    | `/api/messages`           | Retrieve all messages            |
-| GET    | `/api/messages/{id}`      | Retrieve a specific message by ID|
-| POST   | `/api/messages`           | Create a new message             |
+| GET    | `/api/messages/{id}`      | Retrieve a specific message by ID||
 | DELETE | `/api/messages/{id}`      | Delete a message by ID           |
 
 ### Example Message JSON
