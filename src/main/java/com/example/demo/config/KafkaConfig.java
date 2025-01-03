@@ -1,9 +1,7 @@
 package com.example.demo.config;
 
-import com.example.demo.dto.Message;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

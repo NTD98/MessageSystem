@@ -37,15 +37,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Mono<String> sendMessage(Message message) {
-        return messageRepository.save(MessageEntity.builder()
-                        .content(message.getContent())
-                        .authorId(message.getSender())
-                        .build())
-                .map(MessageEntity::getAuthorId);
-    }
-
-    @Override
     @Async("virtualThreadPoolExecutor")
     public void sendBatchMessage(List<Message> message) {
         messageRepository.saveAll(message.parallelStream().map(item->MessageEntity.builder()
