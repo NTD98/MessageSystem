@@ -19,7 +19,7 @@ public class KafkaConsumer {
 
     // This method will be triggered when a message is received on the 'my-topic' topic
     @KafkaListener(topics = "message-topic",
-            groupId = "my-consumer-group",
+            groupId = "message-consumer-group",
             containerFactory = "kafkaListenerContainerFactory"
     )
     public void listen(List<String> message) {

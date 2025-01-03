@@ -11,6 +11,9 @@ Architecture overview: https://lucid.app/lucidchart/6b9bfc46-b9d0-40a9-96ed-ec95
 - **Data Model**: Efficiently designed schema optimized for performance in a distributed environment.
 - **Scalability**: Supports horizontal scaling with Cassandra's replication and partitioning capabilities.
 
+- **Data Sharding**: divine data through shards with (channel,bucket) indexing, enhance query performance.
+- **Time sensitive query**: Generate UUID with snowflake generator, so that we can quickly query ordered data.
+
 ---
 
 ## Getting Started
@@ -41,7 +44,7 @@ To run this project, ensure you have the following installed:
       ```
 
 3. **Update application configuration**:
-    - Ensure `application.yml` contains the correct connection settings for Cassandra:
+    - Ensure `application.yml` contains the correct connection settings for Cassandra for the first time:
       ```yaml
       spring:
         data:
@@ -51,7 +54,7 @@ To run this project, ensure you have the following installed:
             keyspace-name: keyspace_messages
             schema-action: create-if-not-exists
       ```
-
+   - After that update `schema-action` value to `NONE`;
 4. **Build the project**:
    ```bash
    mvn clean install
